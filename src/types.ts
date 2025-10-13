@@ -6,6 +6,22 @@ export type MaterialNote =
   | "Bottom Note"
   | "Base Note";
 
+export type CSVData = {
+  formula_id: string;
+  formula_name: string;
+  creator: string;
+  category: Category;
+  creation_date: string;
+  notes: string;
+  material_name: string;
+  material_type: string;
+  quantity_ml: number;
+  percentage: number;
+  cost_per_ml: number;
+  supplier: string;
+  material_notes: string;
+};
+
 export type Material = {
   name: string;
   quantity: number;
@@ -16,7 +32,7 @@ export type Material = {
 };
 
 export type Formula = {
-  id: number;
+  id: string;
   name: string;
   creator: string;
   category: Category;

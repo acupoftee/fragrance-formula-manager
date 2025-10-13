@@ -1,4 +1,4 @@
-formula_id,formula_name,creator,category,creation_date,notes,material_name,material_type,quantity_ml,percentage,cost_per_ml,supplier,material_notes
+export const csv: string = `formula_id,formula_name,creator,category,creation_date,notes,material_name,material_type,quantity_ml,percentage,cost_per_ml,supplier,material_notes
 F001,Ocean Breeze,Sarah Chen,Fresh,2024-03-15,"Light aquatic fragrance perfect for summer wear",Bergamot Oil,Top Note,15.0,15.0,2.50,CitrusCore,Calabrian bergamot - very bright
 F001,Ocean Breeze,Sarah Chen,Fresh,2024-03-15,"Light aquatic fragrance perfect for summer wear",Lemon Oil,Top Note,8.0,8.0,1.80,CitrusCore,Sicilian lemon - zesty opening
 F001,Ocean Breeze,Sarah Chen,Fresh,2024-03-15,"Light aquatic fragrance perfect for summer wear",Marine Accord,Top Note,12.0,12.0,4.20,AquaScents,Synthetic sea breeze effect
@@ -45,5 +45,4 @@ F006,Green Garden,Lisa Thompson,Fresh,2024-03-28,"Fresh cut grass and blooming h
 F006,Green Garden,Lisa Thompson,Fresh,2024-03-28,"Fresh cut grass and blooming herbs",Rosemary Oil,Middle Note,10.0,10.0,3.60,HerbGarden,Mediterranean rosemary - herbaceous
 F006,Green Garden,Lisa Thompson,Fresh,2024-03-28,"Fresh cut grass and blooming herbs",Thyme Oil,Middle Note,5.0,5.0,4.80,HerbGarden,Wild thyme - earthy herb
 F006,Green Garden,Lisa Thompson,Fresh,2024-03-28,"Fresh cut grass and blooming herbs",Green Tea,Middle Note,15.0,15.0,5.20,TeaScents,Japanese sencha - vegetal and fresh
-F006,Green Garden,Lisa Thompson,Fresh,2024-03-28,"Fresh cut grass and blooming herbs",Bamboo,Base Note,7.0,7.0,6.10,GreenScents,Asian bamboo - clean and modern
-
+F006,Green Garden,Lisa Thompson,Fresh,2024-03-28,"Fresh cut grass and blooming herbs",Bamboo,Base Note,7.0,7.0,6.10,GreenScents,Asian bamboo - clean and modern`;
