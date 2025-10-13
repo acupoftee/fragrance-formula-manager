@@ -36,6 +36,7 @@ export type Formula = {
   name: string;
   creator: string;
   category: Category;
-  creationDate: Date;
+  creationDate: string;
+  notes: string;
   materials: Material[];
 };
