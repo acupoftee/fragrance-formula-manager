@@ -2,7 +2,7 @@ import DataTable, { type TableColumn } from 'react-data-table-component';
 import type { Formula } from '../../types';
 import { useFormulas } from '../../hooks/useFormulas';
 import { SearchFilter } from '../SearchFilter/SearchFilter';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const columns: TableColumn<Formula>[] = [
     {
@@ -37,15 +37,31 @@ const FormulaTable = () => {
     const [filter, setFilter] = useState('');
     const data: Formula[] = useFormulas();
 
-    const handleChange = (updated: string): void => setFilter(updated)
-    const handleClear = (): void => setFilter('')
+    const filteredItems = data.filter((formula: Formula) => {
+        const lowercaseFilter = filter.toLowerCase();
+        return formula.name.toLowerCase().includes(lowercaseFilter) || formula.notes.toLowerCase().includes(lowercaseFilter);
+    });
+
+    const subHeaderComponentMemo = useMemo(() => {
+            const handleChange = (updated: string): void => setFilter(updated)
+            const handleClear = (): void => {
+                if (filter) {
+                    setFilter('');
+                }
+            }
+
+            return (<SearchFilter filterText={filter} onChange={handleChange} onClick={handleClear}/>);
+    }, [filter])
 
     return (
         <>
-            <SearchFilter filterText={filter} onChange={handleChange} onClick={handleClear}/>
             <DataTable 
                 columns={columns}
-                data={data}
+                data={filteredItems}
+                subHeader
+                subHeaderComponent={
+                    subHeaderComponentMemo
+                }
             />
         </>
     )

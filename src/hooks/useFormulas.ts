@@ -1,13 +1,11 @@
 import type { CSVData, Formula } from "../types";
 import { readData } from "../utils/readData";
 
-export const useFormulas = () => {
+export const useFormulas = (): Formula[] => {
   const csvData: CSVData[] = readData();
 
   const entries: { [key: string]: Formula } = {};
 
-  // For each item
-  // 1. Create a new entry where the key is the ID, and the
   for (const row of csvData) {
     if (!entries[row.formula_id]) {
       entries[row.formula_id] = {

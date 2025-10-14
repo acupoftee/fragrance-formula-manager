@@ -5,8 +5,9 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 export const SearchFilter = ({ filterText, onChange, onClick }: { filterText: string, onChange: (updated: string) => void, onClick: () => void }) => {
     return (
         <OutlinedInput
-            sx={{ minWidth: '400px'}} 
+            sx={{ minWidth: '250px'}} 
             value={filterText}
+            size='small'
             onChange={(e) => onChange(e.target.value)}
             placeholder="Filter by Name or Notes"
             endAdornment={
