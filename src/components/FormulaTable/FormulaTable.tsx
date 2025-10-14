@@ -3,6 +3,7 @@ import type { Formula } from '../../types';
 import { useFormulas } from '../../hooks/useFormulas';
 import { SearchFilter } from '../SearchFilter/SearchFilter';
 import { useMemo, useState } from 'react';
+import MaterialTable from '../MaterialTable/MaterialTable';
 
 const columns: TableColumn<Formula>[] = [
     {
@@ -29,7 +30,8 @@ const columns: TableColumn<Formula>[] = [
     {
         name: 'Notes',
         selector: (row: Formula) => row.notes,
-        sortable: true
+        sortable: true,
+        minWidth: '30%'
     },
 ];
 
@@ -62,6 +64,8 @@ const FormulaTable = () => {
                 subHeaderComponent={
                     subHeaderComponentMemo
                 }
+                expandableRows
+                expandableRowsComponent={MaterialTable}
             />
         </>
     )

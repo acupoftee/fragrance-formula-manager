@@ -14,7 +14,7 @@ export type CSVData = {
   creation_date: string;
   notes: string;
   material_name: string;
-  material_type: string;
+  material_type: MaterialNote;
   quantity_ml: number;
   percentage: number;
   cost_per_ml: number;
@@ -24,6 +24,7 @@ export type CSVData = {
 
 export type Material = {
   name: string;
+  materialType: MaterialNote;
   quantity: number;
   percentage: number;
   cost: number;
