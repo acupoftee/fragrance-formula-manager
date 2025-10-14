@@ -21,6 +21,7 @@ export const useFormulas = (): Formula[] => {
 
     entries[row.formula_id].materials.push({
       name: row.material_name,
+      materialType: row.material_type,
       quantity: row.quantity_ml,
       percentage: row.percentage,
       cost: row.cost_per_ml,
@@ -29,7 +30,5 @@ export const useFormulas = (): Formula[] => {
     });
   }
 
-  const formattedEntries: Formula[] = Object.values(entries);
-
-  return formattedEntries;
+  return Object.values(entries);
 };
