@@ -1,6 +1,6 @@
 import type { Formula, Material } from "../types";
 
-export const createCSV = (formula: Formula): string => {
+const createCSV = (formula: Formula): string => {
   const csvHeaders = [
     "formula_id",
     "formula_name",
@@ -38,4 +38,25 @@ export const createCSV = (formula: Formula): string => {
     .join("\n");
 
   return csvString;
+};
+
+export const exportCSV = (formula: Formula): void => {
+  const csvString = createCSV(formula);
+
+  // Create a Blob from the CSV string
+  const blob = new Blob([csvString], { type: "text/csv" });
+
+  // Generate a download link and initiate the download
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${formula.id}.csv`;
+  document.body.appendChild(link);
+
+  // Simulate a click
+  link.click();
+
+  // Remove link and reference
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 };
