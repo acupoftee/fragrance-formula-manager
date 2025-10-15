@@ -70,4 +70,4 @@ I calcualted the most expensive material in the Comparison component, and then o
 
 ### Technical Tradeoffs
 
-Currently, the data is read each time on load
+Currently, the data is read on each render. In a production scenario it would be ideal to paginate the results in the backend so that the number of formulas doesn't bottleneck the rest of the application.
