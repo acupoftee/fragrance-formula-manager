@@ -10,18 +10,16 @@ import jsPDF from 'jspdf';
 import { autoTable } from 'jspdf-autotable'
 import { formatCost } from '../../utils/formatters';
 
-
-
-export default function ActionMenu({ row }: { row: Formula}) {
+export default function ActionMenu({ row }: {row: Formula}) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
   const handleCSVExport = () => {
     const csvString = createCSV(row);
 
@@ -45,12 +43,8 @@ export default function ActionMenu({ row }: { row: Formula}) {
     handleClose();
   }
 
-
   const handleExportPDF = () => {
     const pdf = new jsPDF("portrait", "pt", "A4");
-
-    const cost = formatCost(row.materials.reduce((acc: number, material: Material) => acc + Number(material.cost), 0))
-
     const head: string[][] = [[    
             'Name','Type',
             'Quantity (ml)',
@@ -58,21 +52,19 @@ export default function ActionMenu({ row }: { row: Formula}) {
             'Cost per ml ($)',
             'Supplier',
             'Material Notes']];
-
     const body = row.materials.map((material: Material) => [material.name, material.materialType, material.quantity, material.percentage, material.cost, material.supplier, material.materialNotes]);
+    
     pdf.setFontSize(15);
-
     pdf.text(row.name, 40, 40);
-
+    
     pdf.setFontSize(10);
-
     pdf.text(`Created by: ${row.creator}`, 40, 60);
     pdf.text(`Formula Category: ${row.category}`, 40, 74);
-    pdf.text(`Total Material Cost: ${cost}`,  40, 88);
 
+    const cost = formatCost(row.materials.reduce((acc: number, material: Material) => acc + Number(material.cost), 0));
+    pdf.text(`Total Material Cost: ${cost}`,  40, 88);
     pdf.text(row.notes,  40, 110);
 
-    
     pdf.setFontSize(12);
     pdf.text('Materials',  40, 140);
 

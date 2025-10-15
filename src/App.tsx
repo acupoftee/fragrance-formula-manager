@@ -5,7 +5,10 @@ import FormulaTable from './components/FormulaTable/FormulaTable'
 function App() {
 
   return (
-      <FormulaTable />
+      <div>
+        <h3>Osmo Fragrance Formula Manager</h3>
+        <FormulaTable />
+      </div>
   )
 }
 

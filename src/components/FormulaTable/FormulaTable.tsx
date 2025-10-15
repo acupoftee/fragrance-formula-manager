@@ -19,7 +19,6 @@ const columns: TableColumn<Formula>[] = [
         name: 'Creator',
         selector: (row: Formula) => row.creator,
         sortable: true
-
     },
     {
         name: 'Category',
@@ -87,19 +86,17 @@ const FormulaTable = () => {
     }, [filter, category]);
 
     return (
-        <>
-            <DataTable 
-                columns={columns}
-                data={filteredItems}
-                subHeader
-                subHeaderComponent={
-                    subHeaderComponentMemo
-                }
-                subHeaderAlign={Alignment.LEFT}
-                expandableRows
-                expandableRowsComponent={MaterialTable}
-            />
-        </>
+        <DataTable 
+            columns={columns}
+            data={filteredItems}
+            subHeader
+            subHeaderComponent={
+                subHeaderComponentMemo
+            }
+            subHeaderAlign={Alignment.LEFT}
+            expandableRows
+            expandableRowsComponent={MaterialTable}
+        />
     )
 }
 
