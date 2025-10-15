@@ -2,6 +2,8 @@
 
 Manages all created formulas to better understand formula breakdown, and the costs of each formula.
 
+_No AI tools were used in the making of this project._
+
 ## Features
 
 - Displays all formulas in a table with formula metadata
@@ -11,8 +13,6 @@ Manages all created formulas to better understand formula breakdown, and the cos
 - Shows all materials with their quantities
 - Export formulas to CSV or PDF
 - Compare the cost analysis of 2 or more formulas
-
-\*No generative AI tools were used in the making of this project.
 
 ## Technical Approach
 
