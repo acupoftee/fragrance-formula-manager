@@ -74,7 +74,7 @@ export default function ActionMenu({ row }: {row: Formula}) {
         body
     });
 
-    pdf.save(`${row.id}.pdf`)
+    pdf.save(`${row.id}.pdf`);
     handleClose();
   }
 

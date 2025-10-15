@@ -47,6 +47,19 @@ const columns: TableColumn<Formula>[] = [
 	},
 ];
 
+const custmoStyles = {
+    table: {
+        style: {
+            border: '1px solid rgba(0, 0, 0, 0.1)',
+        }
+    },
+    subHeader: {
+        style: {
+            border: '1px solid rgba(0, 0, 0, 0.1)',
+            borderBottom: 'none'
+        }
+    }
+}
 const FormulaTable = () => {
     const [filter, setFilter] = useState('');
     const [category, setCategory] = useState('');
@@ -86,17 +99,18 @@ const FormulaTable = () => {
     }, [filter, category]);
 
     return (
-        <DataTable 
-            columns={columns}
-            data={filteredItems}
-            subHeader
-            subHeaderComponent={
-                subHeaderComponentMemo
-            }
-            subHeaderAlign={Alignment.LEFT}
-            expandableRows
-            expandableRowsComponent={MaterialTable}
-        />
+    <DataTable 
+        columns={columns}
+        data={filteredItems}
+        subHeader
+        subHeaderComponent={
+            subHeaderComponentMemo
+        }
+        subHeaderAlign={Alignment.LEFT}
+        expandableRows
+        expandableRowsComponent={MaterialTable}
+        customStyles={custmoStyles}
+    />
     )
 }
 
