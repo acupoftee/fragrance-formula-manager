@@ -33,12 +33,7 @@ export const exportPDF = (formula: Formula): void => {
   pdf.text(`Created by: ${formula.creator}`, 40, 60);
   pdf.text(`Formula Category: ${formula.category}`, 40, 74);
 
-  const cost = formatCost(
-    formula.materials.reduce(
-      (acc: number, material: Material) => acc + Number(material.cost),
-      0
-    )
-  );
+  const cost = formatCost(formula.totalCost);
   pdf.text(`Total Material Cost: ${cost}`, 40, 88);
   pdf.text(formula.notes, 40, 110);
 

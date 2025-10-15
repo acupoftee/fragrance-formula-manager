@@ -16,20 +16,22 @@ const columns: TableColumn<Material>[] = [
         sortable: true,
     },
     {
-        name: 'Quantity (ml)',
-        selector: (row: Material) => row.quantity,
+        name: 'Quantity',
+        selector: (row: Material) => `${row.quantity} ml.`,
         sortable: true
 
     },
     {
-        name: 'Percentage',
+        name: 'Percent',
         selector: (row: Material) => formatPercentage(row.percentage),
         sortable: true,
+        sortFunction: (a: Material, b: Material) => b.percentage - a.percentage
     },
     {
-        name: 'Cost per ml ($)',
+        name: 'Cost per ml',
         selector: (row: Material) => formatCost(row.cost),
-        sortable: true
+        sortable: true,
+        sortFunction: (a: Material, b: Material) => b.cost - a.cost
     },
     {
         name: 'Supplier',
@@ -71,7 +73,7 @@ const customStyles = {
 };
 const MaterialTable: React.FC<ExpanderComponentProps<Formula>> = ({ data }) => {
     return (
-        <Box justifyContent="flex-start" paddingX="64px" paddingTop="4px" paddingBottom="32px" textAlign="left" borderBottom="1px solid rgba(0, 0, 0, .12)">
+        <Box sx={{ backgroundColor: 'rgba(246, 246, 246, 0.82)' }} justifyContent="flex-start" paddingX="64px" paddingTop="4px" paddingBottom="32px" textAlign="left" borderBottom="1px solid rgba(0, 0, 0, .12)">
             <h5>{data.name} Materials</h5>
             <DataTable 
                 columns={columns}

@@ -2,12 +2,13 @@ import DataTable, { Alignment, type TableColumn } from 'react-data-table-compone
 import type { Formula, Material } from '../../types';
 import { useFormulas } from '../../hooks/useFormulas';
 import { SearchFilter } from '../SearchFilter/SearchFilter';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import MaterialTable from '../MaterialTable/MaterialTable';
 import { formatCost } from '../../utils/formatters';
-import { Box, Link } from '@mui/material';
+import { Box, Button, Link, Modal } from '@mui/material';
 import { CategoryFilter } from '../CategoryFilter/CategoryFilter';
 import ActionMenu from './ActionMenu';
+import { Comparisons } from '../Comparison/Comparison';
 
 const columns: TableColumn<Formula>[] = [
     {
@@ -27,8 +28,9 @@ const columns: TableColumn<Formula>[] = [
     },
     {
         name: 'Cost ($)',
-        selector: (row: Formula) => formatCost(row.materials.reduce((acc: number, material: Material) => acc + Number(material.cost), 0)),
+        selector: (row: Formula) => formatCost(row.totalCost),
         sortable: true,
+        sortFunction: (a: Formula, b: Formula) => b.totalCost - a.totalCost
     },
     {
         name: 'Date Added',
@@ -60,9 +62,25 @@ const custmoStyles = {
         }
     }
 }
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  border: '1px solid #00000079',
+  boxShadow: 24,
+  p: 4,
+};
+
 const FormulaTable = () => {
     const [filter, setFilter] = useState('');
     const [category, setCategory] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedRows, setSelectedRows] = useState<Formula[]>([]);
+    
     const data: Formula[] = useFormulas();
 
     const filteredItems = useMemo(() => {
@@ -79,6 +97,9 @@ const FormulaTable = () => {
 
     const handleSearchChange = (updated: string): void => setFilter(updated);
     const handleCategoryChange = (updated: string): void => setCategory(updated);
+    const handleSelectedRows = useCallback(({ selectedRows }: { selectedRows: Formula[] }) => setSelectedRows(selectedRows), []);
+    const handleOpen = () => setModalOpen(true);
+    const handleClose = () => setModalOpen(false);
 
     const subHeaderComponentMemo = useMemo(() => {
             const handleClear = (): void => {
@@ -90,27 +111,43 @@ const FormulaTable = () => {
                 }
             }
             return (
-                <Box flexDirection="row">
+                <Box flexDirection="row" width="100%">
                     <SearchFilter filterText={filter} onChange={handleSearchChange} onClick={handleClear}/>
                     <CategoryFilter category={category} onChange={handleCategoryChange} />
                     {(filter || category) && <Link sx={{ m: 1, cursor: 'pointer', textDecoration: 'none' }} onClick={handleClear}>Clear</Link>}
+                    <Button color="primary" onClick={handleOpen} disabled={selectedRows.length < 2}>Compare</Button>
                 </Box>
             );
-    }, [filter, category]);
+    }, [filter, category, selectedRows.length]);
 
     return (
-    <DataTable 
-        columns={columns}
-        data={filteredItems}
-        subHeader
-        subHeaderComponent={
-            subHeaderComponentMemo
-        }
-        subHeaderAlign={Alignment.LEFT}
-        expandableRows
-        expandableRowsComponent={MaterialTable}
-        customStyles={custmoStyles}
-    />
+        <>
+            <DataTable 
+                columns={columns}
+                data={filteredItems}
+                subHeader
+                subHeaderComponent={
+                    subHeaderComponentMemo
+                }
+                subHeaderAlign={Alignment.LEFT}
+                expandableRows
+                expandableRowsComponent={MaterialTable}
+                customStyles={custmoStyles}
+                selectableRows
+                onSelectedRowsChange={handleSelectedRows}
+            />
+            <Modal
+                open={modalOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <h2>Formula Comparisons</h2>
+                    <Comparisons formulas={selectedRows} />
+                </Box>
+            </Modal>
+        </>
     )
 }
 
