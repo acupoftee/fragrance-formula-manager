@@ -16,9 +16,9 @@ const columns: TableColumn<Material>[] = [
         sortable: true,
     },
     {
-        name: 'Quantity',
-        selector: (row: Material) => `${row.quantity} ml.`,
-        sortable: true
+        name: 'Quantity (ml)',
+        selector: (row: Material) => Number(row.quantity),
+        sortable: true,
 
     },
     {
@@ -28,7 +28,7 @@ const columns: TableColumn<Material>[] = [
         sortFunction: (a: Material, b: Material) => b.percentage - a.percentage
     },
     {
-        name: 'Cost per ml',
+        name: 'Cost per ml ($)',
         selector: (row: Material) => formatCost(row.cost),
         sortable: true,
         sortFunction: (a: Material, b: Material) => b.cost - a.cost
