@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import type { Formula, Material } from "../../types"
-import { formatCost, formatPercentage } from "../../utils/formatters"
+import { formatCost } from "../../utils/formatters"
 import type { JSX } from "react";
 
 export const Comparisons = ({ formulas }: { formulas: Formula[] }) => {
