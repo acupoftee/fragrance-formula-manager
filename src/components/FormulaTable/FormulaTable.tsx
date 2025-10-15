@@ -1,9 +1,13 @@
-import DataTable, { type TableColumn } from 'react-data-table-component';
-import type { Formula } from '../../types';
+import DataTable, { Alignment, type TableColumn } from 'react-data-table-component';
+import type { Formula, Material } from '../../types';
 import { useFormulas } from '../../hooks/useFormulas';
 import { SearchFilter } from '../SearchFilter/SearchFilter';
 import { useMemo, useState } from 'react';
 import MaterialTable from '../MaterialTable/MaterialTable';
+import { formatCost } from '../../utils/formatters';
+import { Box, Link } from '@mui/material';
+import { CategoryFilter } from '../CategoryFilter/CategoryFilter';
+import ActionMenu from './ActionMenu';
 
 const columns: TableColumn<Formula>[] = [
     {
@@ -23,6 +27,11 @@ const columns: TableColumn<Formula>[] = [
         sortable: true
     },
     {
+        name: 'Cost ($)',
+        selector: (row: Formula) => formatCost(row.materials.reduce((acc: number, material: Material) => acc + Number(material.cost), 0)),
+        sortable: true,
+    },
+    {
         name: 'Date Added',
         selector: (row: Formula) => row.creationDate,
         sortable: true
@@ -33,27 +42,49 @@ const columns: TableColumn<Formula>[] = [
         sortable: true,
         minWidth: '30%'
     },
+    {
+		cell: row => <ActionMenu row={row} />,
+		width: '64px',
+	},
 ];
 
 const FormulaTable = () => {
     const [filter, setFilter] = useState('');
+    const [category, setCategory] = useState('');
     const data: Formula[] = useFormulas();
 
-    const filteredItems = data.filter((formula: Formula) => {
-        const lowercaseFilter = filter.toLowerCase();
-        return formula.name.toLowerCase().includes(lowercaseFilter) || formula.notes.toLowerCase().includes(lowercaseFilter);
-    });
+    const filteredItems = useMemo(() => {
+        let filteredItems: Formula[] = data;
+        if (category) {
+            filteredItems = filteredItems.filter((formula: Formula) => formula.category.toLowerCase() === category)
+        }
+        if (filter) {
+            const lowercaseFilter = filter.toLowerCase();
+            filteredItems = filteredItems.filter((formula: Formula) => formula.name.toLowerCase().includes(lowercaseFilter) || formula.notes.toLowerCase().includes(lowercaseFilter));
+        }
+        return filteredItems;
+    }, [data, category, filter]);
+
+    const handleSearchChange = (updated: string): void => setFilter(updated);
+    const handleCategoryChange = (updated: string): void => setCategory(updated);
 
     const subHeaderComponentMemo = useMemo(() => {
-            const handleChange = (updated: string): void => setFilter(updated)
             const handleClear = (): void => {
                 if (filter) {
                     setFilter('');
                 }
+                if (category) {
+                    setCategory('');
+                }
             }
-
-            return (<SearchFilter filterText={filter} onChange={handleChange} onClick={handleClear}/>);
-    }, [filter])
+            return (
+                <Box flexDirection="row">
+                    <SearchFilter filterText={filter} onChange={handleSearchChange} onClick={handleClear}/>
+                    <CategoryFilter category={category} onChange={handleCategoryChange} />
+                    {(filter || category) && <Link sx={{ m: 1, cursor: 'pointer', textDecoration: 'none' }} onClick={handleClear}>Clear</Link>}
+                </Box>
+            );
+    }, [filter, category]);
 
     return (
         <>
@@ -64,6 +95,7 @@ const FormulaTable = () => {
                 subHeaderComponent={
                     subHeaderComponentMemo
                 }
+                subHeaderAlign={Alignment.LEFT}
                 expandableRows
                 expandableRowsComponent={MaterialTable}
             />
