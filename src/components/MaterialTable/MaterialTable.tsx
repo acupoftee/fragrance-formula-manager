@@ -1,13 +1,14 @@
 import DataTable, { type TableColumn, type ExpanderComponentProps } from 'react-data-table-component';
 import type { Formula, Material } from '../../types';
 import { Box } from '@mui/material';
+import { formatCost, formatPercentage } from '../../utils/formatters';
 
 
 const columns: TableColumn<Material>[] = [
     {
         name: 'Name',
         selector: (row: Material) => row.name,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'Type',
@@ -21,13 +22,13 @@ const columns: TableColumn<Material>[] = [
 
     },
     {
-        name: 'Percentage (%)',
-        selector: (row: Material) => row.percentage,
+        name: 'Percentage',
+        selector: (row: Material) => formatPercentage(row.percentage),
         sortable: true,
     },
     {
-        name: 'Cost per ml',
-        selector: (row: Material) => row.cost,
+        name: 'Cost per ml ($)',
+        selector: (row: Material) => formatCost(row.cost),
         sortable: true
     },
     {
@@ -70,7 +71,8 @@ const customStyles = {
 };
 const MaterialTable: React.FC<ExpanderComponentProps<Formula>> = ({ data }) => {
     return (
-        <Box justifyContent="center" alignItems="center" padding="16px">
+        <Box justifyContent="flex-start" paddingX="64px" paddingTop="4px" paddingBottom="32px" textAlign="left" borderBottom="1px solid rgba(0, 0, 0, .12)">
+            <h5>{data.name} Materials</h5>
             <DataTable 
                 columns={columns}
                 data={data.materials}
