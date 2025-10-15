@@ -1,5 +1,5 @@
 import DataTable, { Alignment, type TableColumn } from 'react-data-table-component';
-import type { Formula, Material } from '../../types';
+import type { Formula } from '../../types';
 import { useFormulas } from '../../hooks/useFormulas';
 import { SearchFilter } from '../SearchFilter/SearchFilter';
 import { useCallback, useMemo, useState } from 'react';
