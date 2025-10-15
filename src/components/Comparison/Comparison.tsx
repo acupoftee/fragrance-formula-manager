@@ -17,7 +17,7 @@ export const Comparisons = ({ formulas }: { formulas: Formula[] }) => {
     const mostExpensiveIngredients: JSX.Element[] = formulas.sort((a: Formula, b: Formula) => getMostExpensiveIngredient(b.materials) - getMostExpensiveIngredient(a.materials)).map((formula: Formula, index: number) => {
         const material = formula.materials.sort((a: Material, b: Material) => (Number(b.cost) * Number(b.quantity)) - (Number(a.cost) * Number(a.quantity)))[0];
         return (<li key={formula.id} style={{ color: index === 0 ? '#f44336': 'black'}}>
-            Most expensive ingredient in <b>{formula.name}</b>: <b>{material.name}</b> with <b>{formatPercentage(material.percentage)}</b> of the formula costing <b>{formatCost(Number(material.cost) * Number(material.quantity))} for {material?.quantity} milliliters.</b>
+            {formula.name}: <b>{material.name}</b> costing <b>{formatCost(Number(material.cost) * Number(material.quantity))}</b> for {Math.floor(material?.quantity)} ml.
         </li>)
     });
 
@@ -26,7 +26,7 @@ export const Comparisons = ({ formulas }: { formulas: Formula[] }) => {
             <h4>Formula Costs</h4>
             <ol>{fragranceCosts}</ol>
             <br></br>
-            <h4>Most Expensive Ingredients</h4>
+            <h4>Most Expensive Ingredient in each Formula</h4>
             <ol>{mostExpensiveIngredients}</ol>
         </Box>
         
