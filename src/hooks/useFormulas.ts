@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import type { CSVData, Formula } from "../types";
 import { readData } from "../utils/readData";
 

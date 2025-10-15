@@ -16,6 +16,8 @@
     "@mui/icons-material": "^7.3.4",
     "@mui/material": "^7.3.4",
     "@types/papaparse": "^5.3.16",
+    "jspdf": "^3.0.3",
+    "jspdf-autotable": "^5.0.2",
     "papaparse": "^5.5.3",
     "react": "^19.1.1",
     "react-data-table-component": "^7.7.0",
