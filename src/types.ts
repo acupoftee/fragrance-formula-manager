@@ -1,10 +1,6 @@
 export type Category = "Fresh" | "Floral" | "Woody" | "Oriental";
 
-export type MaterialNote =
-  | "Top Note"
-  | "Middle Note"
-  | "Bottom Note"
-  | "Base Note";
+export type MaterialNote = "Top Note" | "Middle Note" | "Base Note";
 
 export type CSVData = {
   formula_id: string;
@@ -38,6 +34,7 @@ export type Formula = {
   creator: string;
   category: Category;
   creationDate: string;
+  cost?: number;
   notes: string;
   materials: Material[];
 };
