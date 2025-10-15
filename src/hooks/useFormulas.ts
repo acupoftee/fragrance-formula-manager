@@ -15,6 +15,7 @@ export const useFormulas = (): Formula[] => {
         creationDate: row.creation_date,
         category: row.category,
         notes: row.notes,
+        totalCost: 0,
         materials: [],
       };
     }
@@ -28,6 +29,9 @@ export const useFormulas = (): Formula[] => {
       supplier: row.supplier,
       materialNotes: row.material_notes,
     });
+
+    entries[row.formula_id].totalCost +=
+      Number(row.cost_per_ml) * Number(row.quantity_ml);
   }
 
   return Object.values(entries);
