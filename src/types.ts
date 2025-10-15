@@ -34,7 +34,7 @@ export type Formula = {
   creator: string;
   category: Category;
   creationDate: string;
-  cost?: number;
+  totalCost: number;
   notes: string;
   materials: Material[];
 };
